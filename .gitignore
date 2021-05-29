@@ -1,0 +1,9 @@
+vendor
+.idea
+.env
+.env.backup
+.phpunit.result.cache
+npm-debug.log
+.styleci.yml
+.editorconfig
+.gitattributes

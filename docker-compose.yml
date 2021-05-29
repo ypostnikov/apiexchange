@@ -1,0 +1,51 @@
+version: "2"
+services:
+  app:
+    build:
+      args:
+        user: colus
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: apimage
+    container_name: apiExchange-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - apiEx
+
+  db:
+    image: mysql:8
+    container_name: apiExchange-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    ports:
+      - 3306:3306
+    volumes:
+       - ./mysql-data:/var/lib/mysql
+    networks:
+      - apiEx
+
+  nginx:
+    image: nginx:alpine
+    container_name: apiExchange-nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www
+      - ./etc/nginx:/etc/nginx/conf.d/
+    networks:
+      - apiEx
+
+networks:
+  apiEx:
+    driver: bridge
