@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'http://localhost/api/collection/comment/save',
+        'http://localhost/api/collection/save'
     ];
 }

@@ -6,10 +6,6 @@ use App\Model\ExchangeRate;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-/*use App\Foundation\Exchange\Exchange;
-use App\Foundation\Transport\Transport;
-use DateTime;*/
-
 /**
  * Class CurrencyExchange
  * @package App\Http\Controllers
@@ -28,8 +24,9 @@ class CurrencyExchangeController extends Controller
         foreach ($collection as &$item) {
             $item['codes'] = json_decode($item['codes']);
             if (!empty($charCodeCurrency)) {
+                $charCode = strtoupper(trim($charCodeCurrency));
                 foreach ($item['codes'] as $currency) {
-                    if ($charCodeCurrency === $currency->charCode) {
+                    if ($charCode === $currency->charCode) {
                         $item['codes'] = $currency;
                     }
                 }
@@ -40,20 +37,12 @@ class CurrencyExchangeController extends Controller
 
     /**
      * @param Request $req
-     * @options array 'data'
+     * @options array
      * @return JsonResponse
      */
     public function save(Request $req): JsonResponse
     {
-        $collection = json_decode($req->get('data'));
-        /* example.
-         $currency = '';
-         $data = ((new DateTime())->format(config('cbrprovider')['dateFormat']));
-         $transport = new Transport();
-         $exChange = new Exchange($transport);
-         $encodedCollection = json_encode($exChange->handle($data, $currency));
-         $collection = json_decode($encodedCollection);*/
-        $uid = '';
+        $collection = $req->all();
         $date = '';
         $codes = [];
         foreach ($collection as $key => $item) {
