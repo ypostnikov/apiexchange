@@ -34,19 +34,9 @@ class CurrencyExchangeController extends Controller
      */
     public function save(Request $req): JsonResponse
     {
-        $collection = $req->all();
-        $date = '';
-        $codes = [];
-        foreach ($collection as $key => $item) {
-            $uid = $key;
-            $codes = $item;
-            $bdate = str_split(base64_decode($key), 2);
-            $date = "{$bdate[2]}{$bdate[3]}-{$bdate[1]}-{$bdate[0]}";
-        }
         $m = new ExchangeRate();
-        return response()->json(['result' => $m->saveCollection($codes, $date, $uid)]);
+        return response()->json(['result' => $m->saveCollection($req->get('codes'), $req->get('date'), $req->get('uid'))]);
     }
-
 
     /**
      * @param Request $req
