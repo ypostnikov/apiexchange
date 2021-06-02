@@ -17,8 +17,9 @@ class CurrencyExchangeResources extends JsonResource
     public function toArray($request)
     {
         $charCode = strtoupper(trim($request->get('charCode')));
+        //@todo some bugs 'uid' => $this->uid,
         $collection = [
-            'uid' => $this->uid,
+            'uid' => $request->get('uid'),
             'date' => $this->date,
             'codes' => json_decode($this->codes),
             'comment' => $this->comment,
@@ -30,7 +31,7 @@ class CurrencyExchangeResources extends JsonResource
                     $chunk = $item;
                 }
             }
-            $collection = $chunk;
+            $collection ['codes'] = $chunk;
         }
         return $collection;
     }
