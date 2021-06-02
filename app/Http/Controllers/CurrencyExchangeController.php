@@ -21,10 +21,10 @@ class CurrencyExchangeController extends Controller
     public function get(string $uid, string $charCodeCurrency = ''): JsonResponse
     {
         $collection = ExchangeRate::where('uid', '=', $uid)->get()->toArray();
-        foreach ($collection as &$item) {
-            $item['codes'] = json_decode($item['codes']);
-            if (!empty($charCodeCurrency)) {
-                $charCode = strtoupper(trim($charCodeCurrency));
+        $charCode = strtoupper(trim($charCodeCurrency));
+        if (!empty($charCode)) {
+            foreach ($collection as &$item) {
+                $item['codes'] = json_decode($item['codes']);
                 foreach ($item['codes'] as $currency) {
                     if ($charCode === $currency->charCode) {
                         $item['codes'] = $currency;
