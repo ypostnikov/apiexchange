@@ -19,5 +19,5 @@ Route::get('/', function () {
 
 Route::get('/api/external/get/{data}/{currency?}', 'CbrProviderController@get');
 Route::post('/api/collection/save', 'CurrencyExchangeController@save');
-Route::get('/api/collection/get/{uid}/{currency?}', 'CurrencyExchangeController@get');
-Route::put('/api/collection/comment/save', 'CurrencyExchangeController@saveComment');
+Route::get('/api/collection/get', 'CurrencyExchangeController@get')->middleware('hasUid');
+Route::put('/api/collection/comment/save', 'CurrencyExchangeController@saveComment')->middleware('hasUid');

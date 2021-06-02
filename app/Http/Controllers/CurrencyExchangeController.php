@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\ExchangeRate;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\CurrencyExchangeResources;
 
 /**
  * Class CurrencyExchange
@@ -14,24 +15,15 @@ class CurrencyExchangeController extends Controller
 {
 
     /**
-     * @param string $uid
-     * @param string $charCodeCurrency
+     * @param Request $req
+     * @options uid
+     * @options charCode
      * @return JsonResponse
      */
-    public function get(string $uid, string $charCodeCurrency = ''): JsonResponse
+    public function get(Request $req): JsonResponse
     {
-        $collection = ExchangeRate::where('uid', '=', $uid)->get()->toArray();
-        $charCode = strtoupper(trim($charCodeCurrency));
-        if (!empty($charCode)) {
-            foreach ($collection as &$item) {
-                $item['codes'] = json_decode($item['codes']);
-                foreach ($item['codes'] as $currency) {
-                    if ($charCode === $currency->charCode) {
-                        $item['codes'] = $currency;
-                    }
-                }
-            }
-        }
+        $uid = $req->get('uid');
+        $collection = new CurrencyExchangeResources(ExchangeRate::findOrFail($uid));
         return response()->json($collection);
     }
 
