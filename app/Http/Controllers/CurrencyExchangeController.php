@@ -23,8 +23,8 @@ class CurrencyExchangeController extends Controller
     public function get(Request $req): JsonResponse
     {
         $uid = $req->get('uid');
-        $collection = new CurrencyExchangeResources(ExchangeRate::findOrFail($uid));
-        return response()->json($collection);
+        $res = new CurrencyExchangeResources(ExchangeRate::findOrFail($uid));
+        return response()->json($res);
     }
 
     /**

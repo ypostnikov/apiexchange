@@ -22,7 +22,7 @@ class CbrProviderController extends Controller
     public function get(string $data, string $charCodeCurrency = ''): JsonResponse
     {
         $idate = DateTime::createFromFormat(config('cbrprovider')['iDateFormat'], $data);
-        $data = $idate->format(config('cbrprovider')['dateFormat']) ?? ((new DateTime())->format(config('cbrprovider')['dateFormat']));
+        $data = $idate->format(config('cbrprovider')['dateFormat']);
         $currency = strtoupper(trim($charCodeCurrency)) ?? '';
         $transport = new Transport();
         $exChange = new Exchange($transport);

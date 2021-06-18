@@ -17,9 +17,8 @@ class CurrencyExchangeResources extends JsonResource
     public function toArray($request)
     {
         $charCode = strtoupper(trim($request->get('charCode')));
-        //@todo some bugs 'uid' => $this->uid,
         $collection = [
-            'uid' => $request->get('uid'),
+            'uid' => $this->uid,
             'date' => $this->date,
             'codes' => json_decode($this->codes),
             'comment' => $this->comment,

@@ -16,7 +16,7 @@ Install database
 Disabled CSRF token for post and put request
 
 **<h3>Example api</h3>**
-- /api/external/get/{data}/{currency?} - get some data(json) at the day('dd/mm/yyyy').Optional params - currency ('JPY')
+- /api/external/get/{data}/{currency?} - get some data(json) at the day('Y-m-d'). Optional params - currency ('JPY')
 - /api/collection/save - save any collection into database
 - /api/collection/get - get a collection from database
 - /api/collection/comment/save - save/update a comment for defined uid collection 

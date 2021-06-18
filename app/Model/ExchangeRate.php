@@ -15,6 +15,7 @@ class ExchangeRate extends Model
 
     protected $table = 'exchange';
     protected $primaryKey = 'uid';
+    public $incrementing = false;
     public $timestamps = false;
     protected $fillable = ['comment'];
 
