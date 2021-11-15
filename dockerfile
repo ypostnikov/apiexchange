@@ -2,7 +2,7 @@
 
 FROM php:7.4-fpm
 
-LABEL description="Prisba project. This install php, nodejs, source files."
+LABEL description="Api Exchange Cbr"
 
 # Arguments defined in docker-compose.yml
 ARG user
